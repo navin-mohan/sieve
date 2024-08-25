@@ -2,7 +2,7 @@ package services.actors;
 
 import java.util.HashMap;
 
-public class Top10LeastFrequentWordsActorProtocol {
+public class Top3MostFrequentWordsActorProtocol {
     public static class GetWords { }
     public static class AddNewEntry {
         private final HashMap<String, Integer> wordFrequency;

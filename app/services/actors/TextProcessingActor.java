@@ -7,11 +7,11 @@ import services.utils.WordFrequencyCalculator;
 
 
 public class TextProcessingActor extends AbstractActor {
-    public final ActorRef topKMostFrequentWordsActor;
-    public final ActorRef topKLeastFrequentWordsActor;
+    public final ActorRef top3MostFrequentWordsActor;
+    public final ActorRef top3LeastFrequentWordsActor;
     public TextProcessingActor() {
-        topKMostFrequentWordsActor = context().actorOf(Top10MostFrequentWordsActor.getProps(), "topKFrequentWordsActor");
-        topKLeastFrequentWordsActor = context().actorOf(Top10LeastFrequentWordsActor.getProps(), "topKLeastFrequentWordsActor");
+        top3MostFrequentWordsActor = context().actorOf(Top3MostFrequentWordsActor.getProps(), "topKFrequentWordsActor");
+        top3LeastFrequentWordsActor = context().actorOf(Top3LeastFrequentWordsActor.getProps(), "topKLeastFrequentWordsActor");
     }
 
     public static Props getProps() {
@@ -27,14 +27,14 @@ public class TextProcessingActor extends AbstractActor {
 
                     wordFrequencyCalculator.getWordFrequency();
 
-                    topKMostFrequentWordsActor.tell(new Top10MostFrequentWordsActorProtocol.AddNewEntry(wordFrequencyCalculator.getWordFrequency()), getSelf());
-                    topKLeastFrequentWordsActor.tell(new Top10LeastFrequentWordsActorProtocol.AddNewEntry(wordFrequencyCalculator.getWordFrequency()), getSelf());
+                    top3MostFrequentWordsActor.tell(new Top3MostFrequentWordsActorProtocol.AddNewEntry(wordFrequencyCalculator.getWordFrequency()), getSelf());
+                    top3LeastFrequentWordsActor.tell(new Top3LeastFrequentWordsActorProtocol.AddNewEntry(wordFrequencyCalculator.getWordFrequency()), getSelf());
                 })
-                .match(Top10MostFrequentWordsActorProtocol.GetWords.class, getWords -> {
-                    topKMostFrequentWordsActor.forward(getWords, getContext());
+                .match(Top3MostFrequentWordsActorProtocol.GetWords.class, getWords -> {
+                    top3MostFrequentWordsActor.forward(getWords, getContext());
                 })
-                .match(Top10LeastFrequentWordsActorProtocol.GetWords.class, getWords -> {
-                    topKLeastFrequentWordsActor.forward(getWords, getContext());
+                .match(Top3LeastFrequentWordsActorProtocol.GetWords.class, getWords -> {
+                    top3LeastFrequentWordsActor.forward(getWords, getContext());
                 })
                 .build();
     }
