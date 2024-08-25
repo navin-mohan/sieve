@@ -4,8 +4,9 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index()
-GET     /about/                     controllers.HomeController.about()
-GET     /ingest/                    controllers.HomeController.ingest()
+POST     /ingest/                    controllers.HomeController.ingest(request: Request)
+GET      /most/                      controllers.HomeController.get10MostFrequentWords()
+GET      /least/                     controllers.HomeController.get10LeastFrequentWords()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
