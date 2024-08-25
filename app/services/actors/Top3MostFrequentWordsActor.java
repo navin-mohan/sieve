@@ -15,7 +15,6 @@ public class Top3MostFrequentWordsActor extends AbstractActor {
         return receiveBuilder()
                 .match(Top3MostFrequentWordsActorProtocol.AddNewEntry.class, addNewEntry -> {
                     addNewEntry.getWordFrequency().forEach((word, frequency) -> topKFrequentItems.add(word, frequency));
-                    System.out.println(topKFrequentItems.getTopK());
                 })
                 .match(Top3MostFrequentWordsActorProtocol.GetWords.class, getWords -> {
                     getSender().tell(topKFrequentItems.getTopK(), getSelf());
