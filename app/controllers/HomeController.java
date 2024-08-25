@@ -6,6 +6,9 @@ import org.apache.pekko.actor.ActorSystem;
 import org.apache.pekko.util.FutureConverters;
 import play.libs.Json;
 import play.mvc.*;
+import services.actors.Top3LeastFrequentWordsActorProtocol;
+import services.actors.Top3MostFrequentWordsActorProtocol;
+
 import static org.apache.pekko.pattern.Patterns.ask;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
@@ -45,9 +48,9 @@ public class HomeController extends Controller {
         return ok();
     }
 
-    public CompletionStage<Result> get10MostFrequentWords() {
+    public CompletionStage<Result> get3MostFrequentWords() {
         return FutureConverters.asJava(
-                ask(textProcessingActor, new services.actors.Top10MostFrequentWordsActorProtocol.GetWords(), 1000))
+                ask(textProcessingActor, new Top3MostFrequentWordsActorProtocol.GetWords(), 1000))
                 .thenApply(response -> {
                     ObjectNode json = Json.newObject();
                     json.put("words", Json.toJson(response));
@@ -55,9 +58,9 @@ public class HomeController extends Controller {
                 });
     }
 
-    public CompletionStage<Result> get10LeastFrequentWords() {
+    public CompletionStage<Result> get3LeastFrequentWords() {
         return FutureConverters.asJava(
-                ask(textProcessingActor, new services.actors.Top10LeastFrequentWordsActorProtocol.GetWords(), 1000))
+                ask(textProcessingActor, new Top3LeastFrequentWordsActorProtocol.GetWords(), 1000))
                 .thenApply(response -> {
                             ObjectNode json = Json.newObject();
                             json.put("words", Json.toJson(response));
