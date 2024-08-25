@@ -1,5 +1,64 @@
 @()
 
 @main("Welcome to Play") {
-  <h1>Hello World!</h1>
+  <div class="container" id="app">
+    <div class="row mt-3">
+      <div class="col-4 px-3">
+        <form>
+          <div class="input-group mb-3">
+            <span class="input-group-text">Text</span>
+            <textarea class="form-control" aria-label="With textarea" v-model="text"></textarea>
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1"  v-model="parallel">
+            <label class="form-check-label" for="exampleCheck1">Parallel</label>
+          </div>
+          <button class="btn btn-primary" type="button" :disabled="submitDisabled" v-on:click="handleSubmit">
+            Send
+            <span class="spinner-border spinner-border-sm" aria-hidden="true" v-if="submitDisabled"></span>
+          </button>
+          <div class="form-text text-danger" v-if="submitStatus=='error'">
+            Failed to submit the text.
+          </div>
+          <div class="form-text text-success" v-if="submitStatus=='success'">
+            Successfully submitted the text.
+          </div>
+        </form>
+      </div>
+      <div class="col-4 px-5">
+        <h5 class="text-center">Top 10 Most Frequent Words</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Word</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr v-for="(item, index) in mostFrequent">
+              <th scope="row">{{index + 1}}</th>
+              <td>{{item}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-4 px-5">
+        <h5 class="text-center">Top 10 Least Frequent Words</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Word</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr v-for="(item, index) in leastFrequent">
+              <th scope="row">{{index + 1}}</th>
+              <td>{{item}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 }
