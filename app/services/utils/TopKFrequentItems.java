@@ -53,14 +53,14 @@ public class TopKFrequentItems<T extends Comparable<T>> {
         this.k = k;
     }
 
-    public void add(T item) {
+    public void add(T item, int frequency) {
         final int itemFrequency = frequencyMap.getOrDefault(item, 0);
 
-        if (itemFrequency > 0) {
+        if (itemFrequency != 0) {
             topKItems.remove(new FrequencyElementPair(itemFrequency, item));
         }
 
-        final int newFrequency = itemFrequency + 1;
+        final int newFrequency = itemFrequency + frequency;
 
         frequencyMap.put(item, newFrequency);
 
