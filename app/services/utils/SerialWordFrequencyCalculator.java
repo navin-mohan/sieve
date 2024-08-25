@@ -8,7 +8,6 @@ public class SerialWordFrequencyCalculator implements WordFrequencyCalculator {
     protected HashMap<String, Integer> wordFrequency = new HashMap<>();
     @Override
     public void addString(String str) {
-
         Stream<Character> stream = (str + " ").chars().mapToObj(c -> (char) c);
         StreamWordCounter streamWordCounter = stream.collect(() -> new StreamWordCounter(true, "", new HashMap<>()),
                 StreamWordCounter::accumulate,
