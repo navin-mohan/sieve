@@ -3,10 +3,10 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index()
-POST     /ingest/                    controllers.HomeController.ingest(request: Request)
-GET      /most/                      controllers.HomeController.get10MostFrequentWords()
-GET      /least/                     controllers.HomeController.get10LeastFrequentWords()
+GET      /                           controllers.HomeController.index()
+POST     /api/ingest/                    controllers.HomeController.ingest(request: Request)
+GET      /api/most/                      controllers.HomeController.get3MostFrequentWords()
+GET      /api/least/                     controllers.HomeController.get3LeastFrequentWords()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
